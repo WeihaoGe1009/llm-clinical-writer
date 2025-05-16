@@ -1,0 +1,17 @@
+# Ignore virtual environments
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter and Streamlit cache
+.ipynb_checkpoints/
+.cache/
+.streamlit/
+
+# Package build files
+*.egg-info/
+dist/
+build/
+
