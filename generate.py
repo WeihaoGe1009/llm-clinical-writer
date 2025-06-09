@@ -4,7 +4,6 @@ import torch
 from huggingface_hub import login
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
-
 # Load Hugging Face Token (optional safety check)
 def get_token():
     token_file = Path.home() / ".huggingface" / "token"
@@ -64,3 +63,17 @@ def generate_document(doc_type: str, inputs: dict, use_llm: bool = False) -> str
         return generate_from_llm(filled)
     else:
         return filled
+
+
+
+# Load a small model first for testing
+generator = pipeline("text-generation", model="distilgpt2")
+
+def generate_trial_design(input_json):
+    prompt = "Generate the 'Trial Design' section based on the following JSON:\n"
+    prompt += json.dumps(input_json, indent=2)
+    prompt += "\nWrite in formal clinical language."
+
+    output = generator(prompt, max_new_tokens=300, do_sample=False)[0]["generated_text"]
+    return output[len(prompt):].strip()
+
